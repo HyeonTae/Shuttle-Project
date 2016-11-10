@@ -7,7 +7,7 @@ public class Clas {
 	private String dept;
 	private String area;
 	
-	private String area3;
+	private String area4;
 	
 	public Clas(String id, String pass, String name, String dept, String area) {
 		super();
