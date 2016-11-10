@@ -1,11 +1,14 @@
 package smu.shuttle.model;
 
 public class Clas {
+
 	private String id;
 	private String pass;
 	private String name;
 	private String dept;
 	private String area;
+	
+	private String area2;
 	
 	public Clas(String id, String pass, String name, String dept, String area) {
 		super();
