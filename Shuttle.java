@@ -1,13 +1,13 @@
 package smu.shuttle.model;
 
-public class Shuttle {
+public class Bus {
 	private String id;
 	private String dep; //출발지
 	private String dest; //도착지
 	private int hour;
 	private int min;
 	
-	public Shuttle(String id, String dep, String dest, int hour, int min) {
+	public Bus(String id, String dep, String dest, int hour, int min) {
 		super();
 		this.id = id;
 		this.dep = dep;
