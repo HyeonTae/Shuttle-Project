@@ -1,6 +1,6 @@
 package smu.shuttle.model;
 
-public class Clas {
+public class Class {
 
 	private String id;
 	private String pass;
@@ -8,7 +8,7 @@ public class Clas {
 	private String dept;
 	private String area;
 	
-	public Clas(String id, String pass, String name, String dept, String area) {
+	public Class(String id, String pass, String name, String dept, String area) {
 		super();
 		this.id = id;
 		this.pass = pass;
