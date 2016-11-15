@@ -38,5 +38,27 @@ public class BusDao {
 			DBUtil.close(pst);
 		}
 		return 0;
-	}	
+	}
+	//버스시간표 수정
+		public int updateBus(Bus b){
+			con = DBUtil.getConnection();
+			String sql = "update `seo`.`shuttle` set `dep`=?,`dest`=?, `hour`=?, `min`=? where `shuttle`.`id`=? limit 1";
+			pst = null;
+			try {
+				pst = con.prepareStatement(sql);
+				pst.setString(1, b.getDep());
+				pst.setString(2, b.getDest());
+				pst.setInt(3, b.getHour());
+				pst.setInt(4, b.getMin());
+				pst.setString(5, b.getId());
+				
+				return pst.executeUpdate();
+			} catch(SQLException e){
+				e.printStackTrace();
+			}finally {
+				DBUtil.close(con);
+				DBUtil.close(pst);
+			}
+			return 0;
+		}
 }
