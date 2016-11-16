@@ -291,7 +291,7 @@ body {
       <h1>Master Login</h1>
     </div>
     <div class="form-content">
-      <form>
+      <form action="main.do?action=loginAdmin" method="post" id="myForm>
         <div class="form-group">
           <label for="username">Username</label>
           <input type="text" id="id" name="id" required="required"/>
@@ -304,8 +304,12 @@ body {
           <button type="submit" name = "login">Log In</button>
         </div>
       </form>
-
-         
+     	<%
+             String msg = (String) request.getAttribute("msg");
+             if (msg == null) {
+                 msg = "";
+             }
+          %>
 
     </div>
   </div>
