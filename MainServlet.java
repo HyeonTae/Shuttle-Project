@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import smu.shuttle.dao.ClassDao;
-import smu.shuttle.dao.DeviceDao;
+import smu.shuttle.dao.BusDao;
 
 /**
  * Servlet implementation class Servlet
@@ -18,7 +18,7 @@ import smu.shuttle.dao.DeviceDao;
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ClassDao cDao = new ClassDao();
-	DeviceDao dDao = new DeviceDao();
+	BusDao bDao = new BusDao();
 	ObjectMapper mapper = new ObjectMapper();
        
     /**
