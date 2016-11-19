@@ -82,4 +82,23 @@ public class BusDao {
 		}
 		return null;
 	}
+
+	// 버스정보삭제
+	public int deleteClass(String id) {
+		con = DBUtil.getConnection();
+		String sql = "delete from bus where id=?";
+		pst = null;
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, id);
+
+			return pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(con);
+			DBUtil.close(pst);
+		}
+		return 0;
+	}
 }
