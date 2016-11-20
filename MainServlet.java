@@ -35,7 +35,9 @@ public class MainServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		if (action.equals("loginAdmin")) { //관리자 로그인
 			loginAdmin(req, res);
-		} 
+		} else if (action.equals("searchAllClass")) { //전체학생조회
+			searchAllClass(req, res);
+		}
 	}
 	
 	@Override
@@ -44,7 +46,7 @@ public class MainServlet extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 		doGet(req, res);
 	}
-	
+	//과리자 로그인
 	private void loginAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String adminId = request.getParameter("id");
 		String adminPw = request.getParameter("pass");
@@ -62,4 +64,12 @@ public class MainServlet extends HttpServlet {
 			}
 		}
 	}
+	//전체 학생 조회
+		public void searchAllClass(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+			request.setAttribute("classList", cDao.getAllClass());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchAllClassPage.jsp");
+			System.out.println("모든학생조회");
+			dispatcher.forward(request, response);
+		}
 }
