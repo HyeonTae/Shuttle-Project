@@ -81,7 +81,7 @@ nav ul li ul li a :hover { background:  #000000;}
 
 nav .fa.fa-angle-down {margin - left : 6px;}
 
-
+/*메뉴끝 =========================================*/
 
 </style>
 
@@ -96,7 +96,7 @@ nav .fa.fa-angle-down {margin - left : 6px;}
   <nav>
     <div class="container">
       <ul>
-        <li><a href="#">Home</a></li>
+        <li><a href="AdminMain.jsp">Home</a></li>
         <li> <a href="#">학생관리<i class='fa fa-angle-down'></i></a>
           <ul>
             <li><a href="#">학생추가</a></li>
