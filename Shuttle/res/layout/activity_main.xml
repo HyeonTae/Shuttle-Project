@@ -56,23 +56,25 @@
         android:text="아산역10:00" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/nearTimeBtn"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView5"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="정류장 선택" />
+        android:onClick="nearTimeBtn"
+        android:text="가까운 시간표" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/totalTimeBtn"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button1"
         android:layout_below="@+id/button1"
         android:layout_marginTop="22dp"
+        android:onClick="totaTimelBtn"
         android:text="전체시간표" />
 
     <TextView
