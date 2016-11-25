@@ -108,7 +108,7 @@ public class ClassDao {
 	// 정보수정
 	public int updateClass(Class c) {
 		con = DBUtil.getConnection();
-		String sql = "update class set pass=?,name=?,dept=?,area=? where id=?";
+		String sql = "update `seo`.`class` set `pass`=?,`name`=?,`dept`=?,`area`=? `where` `shuttle`.`id`=? limit 1";
 		pst = null;
 		try {
 			pst = con.prepareStatement(sql);
