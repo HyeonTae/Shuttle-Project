@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import smu.shuttle.model.Class;
 import smu.shuttle.dao.ClassDao;
 import smu.shuttle.dao.BusDao;
 
@@ -37,6 +38,12 @@ public class MainServlet extends HttpServlet {
 			loginAdmin(req, res);
 		} else if (action.equals("searchAllClass")) { //전체학생조회
 			searchAllClass(req, res);
+		} else if (action.equals("regClassToAdmin")) { //학생추가
+			regClassToAdmin(req, res);
+		} else if (action.equals("searchClass")) { //학생검색페이지 이동
+			res.sendRedirect("SearchClassPage.jsp");
+		} else if (action.equals("searchClassForID")) { //학생 ID로 검색
+			searchClassForID(req, res);
 		}
 	}
 	
@@ -71,5 +78,21 @@ public class MainServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchAllClassPage.jsp");
 			System.out.println("모든학생조회");
 			dispatcher.forward(request, response);
+		}
+		//학생 추가
+		public void regClassToAdmin(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+			cDao.insertClass(new Class(request.getParameter("id"), request.getParameter("pass"),
+					request.getParameter("name"), request.getParameter("dept"), request.getParameter("area")));
+			System.out.println("학생추가완료");
+			response.sendRedirect("AdminMain.jsp");
+		}
+		//학생 ID로 검색
+		public void searchClassForID(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+			request.setAttribute("class", cDao.selectUserForId(request.getParameter("id")));
+			RequestDispatcher rd = request.getRequestDispatcher("/SearchClassPage.jsp");
+			System.out.println("학생조회완료");
+			rd.forward(request, response);
 		}
 }
