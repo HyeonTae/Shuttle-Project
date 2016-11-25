@@ -21,7 +21,6 @@
    <html xmlns="http://www.w3.org/1999/xhtml">
    <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-   <title#</title>
 
    <!--JS추가-->
 
@@ -103,15 +102,6 @@
    /*메뉴끝 =========================================*/
 
 
-
-
-
-
-
-
-
-
-
    table, td{
    	font:100% Arial, Helvetica, sans-serif;
    }
@@ -191,7 +181,7 @@
    <body>
 
 
-   <!--메뉴시작이다-->
+   <!--메뉴시작-->
 
    	<nav>
        <div class="container">
