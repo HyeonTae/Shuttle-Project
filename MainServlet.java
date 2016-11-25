@@ -21,39 +21,40 @@ public class MainServlet extends HttpServlet {
 	ClassDao cDao = new ClassDao();
 	BusDao bDao = new BusDao();
 	ObjectMapper mapper = new ObjectMapper();
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MainServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-    @Override
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public MainServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("-------------------------------------------");
 		String action = req.getParameter("action");
-		if (action.equals("loginAdmin")) { //관리자 로그인
+		if (action.equals("loginAdmin")) { // 관리자 로그인
 			loginAdmin(req, res);
-		} else if (action.equals("searchAllClass")) { //전체학생조회
+		} else if (action.equals("searchAllClass")) { // 전체학생조회
 			searchAllClass(req, res);
-		} else if (action.equals("regClassToAdmin")) { //학생추가
+		} else if (action.equals("regClassToAdmin")) { // 학생추가
 			regClassToAdmin(req, res);
-		} else if (action.equals("searchClass")) { //학생검색페이지 이동
+		} else if (action.equals("searchClass")) { // 학생검색페이지 이동
 			res.sendRedirect("SearchClassPage.jsp");
-		} else if (action.equals("searchClassForID")) { //학생 ID로 검색
+		} else if (action.equals("searchClassForID")) { // 학생 ID로 검색
 			searchClassForID(req, res);
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("doPost..");
 		req.setCharacterEncoding("utf-8");
 		doGet(req, res);
 	}
-	//과리자 로그인
+
+	// 과리자 로그인
 	private void loginAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String adminId = request.getParameter("id");
 		String adminPw = request.getParameter("pass");
@@ -71,28 +72,31 @@ public class MainServlet extends HttpServlet {
 			}
 		}
 	}
-	//전체 학생 조회
-		public void searchAllClass(HttpServletRequest request, HttpServletResponse response)
-				throws ServletException, IOException {
-			request.setAttribute("classList", cDao.getAllClass());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchAllClassPage.jsp");
-			System.out.println("모든학생조회");
-			dispatcher.forward(request, response);
-		}
-		//학생 추가
-		public void regClassToAdmin(HttpServletRequest request, HttpServletResponse response)
-				throws ServletException, IOException {
-			cDao.insertClass(new Class(request.getParameter("id"), request.getParameter("pass"),
-					request.getParameter("name"), request.getParameter("dept"), request.getParameter("area")));
-			System.out.println("학생추가완료");
-			response.sendRedirect("AdminMain.jsp");
-		}
-		//학생 ID로 검색
-		public void searchClassForID(HttpServletRequest request, HttpServletResponse response)
-				throws ServletException, IOException {
-			request.setAttribute("class", cDao.selectUserForId(request.getParameter("id")));
-			RequestDispatcher rd = request.getRequestDispatcher("/SearchClassPage.jsp");
-			System.out.println("학생조회완료");
-			rd.forward(request, response);
-		}
+
+	// 전체 학생 조회
+	public void searchAllClass(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setAttribute("classList", cDao.getAllClass());
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchAllClassPage.jsp");
+		System.out.println("모든학생조회");
+		dispatcher.forward(request, response);
+	}
+
+	// 학생 추가
+	public void regClassToAdmin(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		cDao.insertClass(new Class(request.getParameter("id"), request.getParameter("pass"),
+				request.getParameter("name"), request.getParameter("dept"), request.getParameter("area")));
+		System.out.println("학생추가완료");
+		response.sendRedirect("AdminMain.jsp");
+	}
+
+	// 학생 ID로 검색
+	public void searchClassForID(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setAttribute("class", cDao.selectUserForId(request.getParameter("id")));
+		RequestDispatcher rd = request.getRequestDispatcher("/SearchClassPage.jsp");
+		System.out.println("학생조회완료");
+		rd.forward(request, response);
+	}
 }
