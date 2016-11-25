@@ -44,6 +44,10 @@ public class MainServlet extends HttpServlet {
 			res.sendRedirect("SearchClassPage.jsp");
 		} else if (action.equals("searchClassForID")) { // 학생 ID로 검색
 			searchClassForID(req, res);
+		} else if (action.equals("updateClass")) { // 학생정보수정
+			updateClass(req, res);
+		} else if (action.equals("deleteClass")) { // 학생정보삭제
+			deleteClass(req, res);
 		}
 	}
 
@@ -98,5 +102,31 @@ public class MainServlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/SearchClassPage.jsp");
 		System.out.println("학생조회완료");
 		rd.forward(request, response);
+	}
+
+	// 학생정보 수정
+	public void updateClass(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = request.getParameter("id");
+		String pass = request.getParameter("dev_id");
+		String name = request.getParameter("pass");
+		String dept = request.getParameter("name");
+		String area = request.getParameter("drom");
+		if (cDao.updateClass(new Class(id, pass, name, dept, area)) > 0) {
+			System.out.println(id + "이 수정하였습니다.");
+		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/AdminMain.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	// 학생정보 삭제
+	public void deleteClass(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = request.getParameter("id");
+		if (cDao.deleteClass(id) > 0) {
+			System.out.println(id + "이 삭제 되었습니다.");
+		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/AdminMain.jsp");
+		dispatcher.forward(request, response);
 	}
 }
