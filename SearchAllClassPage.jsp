@@ -262,6 +262,6 @@
          <th align="center">지역</th>
       </tr>
    </table>
-   <br><br><a href="AdminMain.jsp">메뉴 화면으로</a>
+
 </body>
 </html>
