@@ -38,6 +38,8 @@ public class MainServlet extends HttpServlet {
 			loginAdmin(req, res);
 		} else if (action.equals("searchAllClass")) { // 전체학생조회
 			searchAllClass(req, res);
+		} else if (action.equals("regClass")) { //학생추가페이지
+			res.sendRedirect("RegClassPage.jsp");
 		} else if (action.equals("regClassToAdmin")) { // 학생추가
 			regClassToAdmin(req, res);
 		} else if (action.equals("searchClass")) { // 학생검색페이지 이동
