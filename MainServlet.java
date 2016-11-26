@@ -110,10 +110,10 @@ public class MainServlet extends HttpServlet {
 	public void updateClass(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
-		String pass = request.getParameter("dev_id");
-		String name = request.getParameter("pass");
-		String dept = request.getParameter("name");
-		String area = request.getParameter("drom");
+		String pass = request.getParameter("pass");
+		String name = request.getParameter("name");
+		String dept = request.getParameter("dept");
+		String area = request.getParameter("area");
 		if (cDao.updateClass(new Class(id, pass, name, dept, area)) > 0) {
 			System.out.println(id + "이 수정하였습니다.");
 		}
