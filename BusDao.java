@@ -67,7 +67,7 @@ public class BusDao {
 	public ArrayList<Bus> getAllBus() {
 		busList = new ArrayList<>();
 		con = DBUtil.getConnection();
-		String sql = "select * from bus";
+		String sql = "select * from bus order by id";
 		pst = null;
 		try {
 			pst = con.prepareStatement(sql);
