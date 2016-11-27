@@ -141,7 +141,7 @@ public class MainServlet extends HttpServlet {
 				throws ServletException, IOException {
 			request.setAttribute("busList", bDao.getAllBus());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchAllBusPage.jsp");
-			System.out.println("모든학생조회");
+			System.out.println("셔틀 전체시간표 조회");
 			dispatcher.forward(request, response);
 		}
 }
