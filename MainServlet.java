@@ -2,6 +2,7 @@ package smu.shuttle.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import smu.shuttle.model.Class;
+import smu.shuttle.model.Bus;
 import smu.shuttle.dao.ClassDao;
 import smu.shuttle.dao.BusDao;
 
@@ -50,6 +52,8 @@ public class MainServlet extends HttpServlet {
 			updateClass(req, res);
 		} else if (action.equals("deleteClass")) { // 학생정보삭제
 			deleteClass(req, res);
+		} else if (action.equals("searchAllBus")) { //전체 셔틀버스 시간표 조회
+			searchAllBus(req, res);
 		}
 	}
 
@@ -131,4 +135,13 @@ public class MainServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/AdminMain.jsp");
 		dispatcher.forward(request, response);
 	}
+	
+	//전체 셔틀버스 시간표 조회
+		public void searchAllBus(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+			request.setAttribute("busList", bDao.getAllBus());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchAllBusPage.jsp");
+			System.out.println("모든학생조회");
+			dispatcher.forward(request, response);
+		}
 }
