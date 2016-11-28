@@ -291,7 +291,7 @@ body {
       <h1>Master Login</h1>
     </div>
     <div class="form-content">
-      <form action="main.do?action=loginAdmin" method="post" id="myForm>
+      <form action="main.do?action=loginAdmin" method="post" id="myForm">
         <div class="form-group">
           <label for="username">Username</label>
           <input type="text" id="id" name="id" required="required"/>
