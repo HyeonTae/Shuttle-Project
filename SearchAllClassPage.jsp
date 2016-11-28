@@ -11,8 +11,11 @@
 
    /*               메인 스타일                         */
    @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,500);
+
    html { box-sizing: border-box; }
+
    *, *:before, *:after { box-sizing: inherit; }
+
    body {
      background: #fafafa;
      font-family: "Roboto", sans-serif;
