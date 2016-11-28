@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!-- add link -->
+  <!-- add link -->
 
 
 <style>
@@ -99,9 +99,9 @@ nav .fa.fa-angle-down {margin - left : 6px;}
         <li><a href="AdminMain.jsp">Home</a></li>
         <li> <a href="#">학생관리<i class='fa fa-angle-down'></i></a>
           <ul>
-            <li><a href="main.do?action=regClass">학생추가</a></li>
+            <li><a href="main.do?action=RegClassPage.jsp">학생추가</a></li>
             <li><a href="main.do?action=searchClass">학생조회</a></li>
-            <li><a href="main.do?action=searchAllClass">모든 학생 조회</a></li>
+            <li><a href="main.do?action=SearchAllClassPage.jsp">모든 학생 조회</a></li>
           </ul>
         </li>
         <li class='sub-menu'> <a href="#">셔틀관리<i class='fa fa-angle-down'></i></a>
