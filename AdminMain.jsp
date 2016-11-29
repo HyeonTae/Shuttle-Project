@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -87,7 +89,7 @@ nav .fa.fa-angle-down {margin - left : 6px;}
 
 
 <script type="text/javascript">
-//draft
+
 </script>
 
 <title>Insert title here</title>
@@ -99,14 +101,22 @@ nav .fa.fa-angle-down {margin - left : 6px;}
         <li><a href="AdminMain.jsp">Home</a></li>
         <li> <a href="#">학생관리<i class='fa fa-angle-down'></i></a>
           <ul>
-            <li><a href="main.do?action=RegClassPage.jsp">학생추가</a></li>
+            <li><a href="main.do?action=regClass">학생추가</a></li>
             <li><a href="main.do?action=searchClass">학생조회</a></li>
-            <li><a href="main.do?action=SearchAllClassPage.jsp">모든 학생 조회</a></li>
+            <li><a href="main.do?action=searchAllClass">모든 학생 조회</a></li>
           </ul>
         </li>
         <li class='sub-menu'> <a href="#">셔틀관리<i class='fa fa-angle-down'></i></a>
           <ul>
-            <li><a href="#">셔틀 정보 조회</a></li>
+             <li><a href="main.do?action=addBus">셔틀버스 추가</a></li>
+	           <li><a href="main.do?action=updateBusPage">셔틀버스 수정 페이지</a></li>
+	           <li><a href="main.do?action=searchAllBus">전체 셔틀버스시간표 조회</a></li>
+  	         <li><a href="main.do?action=searchBusFromAsanToSMU">셔틀버스시간표 조회 (아산역 -> 학교)</a></li>
+  	         <li><a href="main.do?action=searchBusFromCheonAnToSMU">셔틀버스시간표 조회 (천안역 -> 학교)</a></li>
+  	         <li><a href="main.do?action=searchBusFromTerminalToSMU">셔틀버스시간표 조회 (터미널 -> 학교)</a></li>
+  	         <li><a href="main.do?action=searchBusForAsan">셔틀버스시간표 조회 (학교 -> 아산역)</a></li>
+             <li><a href="main.do?action=searchBusForCheonAn">셔틀버스시간표 조회 (학교 -> 천안역)</a></li>
+  	         <li><a href="main.do?action=searchBusForTerminal">셔틀버스시간표 조회 (학교 -> 터미널)</a></li>
           </ul>
         </li>
       </ul>
