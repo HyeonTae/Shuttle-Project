@@ -52,10 +52,32 @@ public class MainServlet extends HttpServlet {
 			updateClass(req, res);
 		} else if (action.equals("deleteClass")) { // 학생정보삭제
 			deleteClass(req, res);
+		} else if (action.equals("addBus")) { // 셔틀버스추가페이지
+			res.sendRedirect("addBusPage.jsp");
+		} else if (action.equals("addBusToAdmin")) { // 셔틀버스추가
+			addBusToAdmin(req, res);
+		} else if (action.equals("updateBusPage")) { // 셔틀버스 수정 페이지 이동
+			res.sendRedirect("updateBusPage.jsp");
+		} else if (action.equals("searchBusForID")) { // 셔틀버스 ID로 검색
+			searchBusForID(req, res);
+		} else if (action.equals("updateBus")) { // 셔틀버스정보수정
+			updateBus(req, res);
+		} else if (action.equals("deleteBus")) { // 셔틀버스정보삭제
+			deleteBus(req, res);
 		} else if (action.equals("searchAllBus")) { // 전체 셔틀버스 시간표 조회
 			searchAllBus(req, res);
-		} else if (action.equals("searchBusForSMU")) { // 셔틀버스 시간표 조회(학교)
-			searchBusForSMU(req, res);
+		} else if (action.equals("searchBusFromAsanToSMU")) { // 셔틀버스 시간표 조회(아산역->학교)
+			searchBusFromAsanToSMU(req, res);
+		} else if (action.equals("searchBusFromCheonAnToSMU")) { // 셔틀버스 시간표조회(천안역->학교)
+			searchBusFromCheonAnToSMU(req, res);
+		} else if (action.equals("searchBusFromTerminalToSMU")) { // 셔틀버스 시간표조회(터미널->학교)
+			searchBusFromTerminalToSMU(req, res);
+		} else if (action.equals("searchBusForAsan")) { // 셔틀버스 시간표조회(학교->아산역)
+			searchBusForAsan(req, res);
+		} else if (action.equals("searchBusForCheonAn")) { // 셔틀버스 시간표조회(학교->천안역)
+			searchBusForCheonAn(req, res);
+		} else if (action.equals("searchBusForTerminal")) { // 셔틀버스 시간표조회(학교->터미널)
+			searchBusForTerminal(req, res);
 		}
 	}
 
@@ -138,22 +160,119 @@ public class MainServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	// 셔틀버스 추가
+	public void regClassToAdmin(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		cDao.insertClass(new Class(request.getParameter("id"), request.getParameter("pass"),
+				request.getParameter("name"), request.getParameter("dept"), request.getParameter("area")));
+		System.out.println("셔틀버스 추가완료");
+		response.sendRedirect("AdminMain.jsp");
+	}
+	
+	// 셔틀버스 ID로 검색
+	public void searchBusForID(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setAttribute("bus", bDao.getSearchBusForId(request.getParameter("id")));
+		RequestDispatcher rd = request.getRequestDispatcher("/updateBusPage.jsp");
+		System.out.println("셔틀버스ID조회완료");
+		rd.forward(request, response);
+	}
+
+	// 학생정보 수정
+	public void updateBus(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = request.getParameter("id");
+		String dep = request.getParameter("dep");
+		String dest = request.getParameter("dest");
+		int hour = Integer.parseInt(request.getParameter("hour"));
+		int min = Integer.parseInt(request.getParameter("min"));
+		if (bDao.updateBus(new Bus(id, dep, dest, hour, min)) > 0) {
+			System.out.println("셔틀버스" + id + "이 수정되었습니다.");
+		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/AdminMain.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	// 학생정보 삭제
+	public void deleteBus(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = request.getParameter("id");
+		if (bDao.deleteBus(id) > 0) {
+			System.out.println("셔틀버스" + id + "이 삭제 되었습니다.");
+		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/AdminMain.jsp");
+		dispatcher.forward(request, response);
+	}
+
 	// 전체 셔틀버스 시간표 조회
 	public void searchAllBus(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute("busList", bDao.getAllBus());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchAllBusPage.jsp");
-		System.out.println("셔틀 전체시간표 조회");
+		System.out.println("전체 셔틀버스 시간표 조회");
 		dispatcher.forward(request, response);
 	}
 
-	// 셔틀버스 시간표 조회(학교)
-	public void searchBusForSMU(HttpServletRequest request, HttpServletResponse response)
+	// 셔틀버스 시간표 조회(아산역->학교)
+	public void searchBusFromAsanToSMU(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String id = "A01";
-		request.setAttribute("busList", bDao.getSearchBusForSMU(id));
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchBusForSMUPage.jsp");
-		System.out.println("셔틀버스 시간표 조회(학교)");
+		String dep = "아산역";
+		String dest = "학교";
+		request.setAttribute("busList", bDao.getSearchBusToSMU(dep, dest));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchBusFromAsanToSMUPage.jsp");
+		System.out.println("셔틀버스 시간표 조회(아산역->학교)");
+		dispatcher.forward(request, response);
+	}
+
+	// 셔틀버스 시간표 조회(천안역->학교)
+	public void searchBusFromCheonAnToSMU(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dep = "천안역";
+		String dest = "학교";
+		request.setAttribute("busList", bDao.getSearchBusToSMU(dep, dest));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchBusFromCheonAnToSMUPage.jsp");
+		System.out.println("셔틀버스 시간표 조회(천안역->학교)");
+		dispatcher.forward(request, response);
+	}
+
+	// 셔틀버스 시간표 조회(터미널->학교)
+	public void searchBusFromTerminalToSMU(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dep = "터미널";
+		String dest = "학교";
+		request.setAttribute("busList", bDao.getSearchBusToSMU(dep, dest));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchBusFromTerminalToSMUPage.jsp");
+		System.out.println("셔틀버스 시간표 조회(터미널->학교)");
+		dispatcher.forward(request, response);
+	}
+	
+	// 셔틀버스 시간표 조회(학교->아산역)
+	public void searchBusForAsan(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dest = "천안아산";
+		request.setAttribute("busList", bDao.getSearchBusToDest(dest));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchBusForAsanPage.jsp");
+		System.out.println("셔틀버스 시간표 조회(학교->아산역)");
+		dispatcher.forward(request, response);
+	}
+	
+	// 셔틀버스 시간표 조회(학교->천안역)
+	public void searchBusForCheonAn(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dest = "천안아산";
+		request.setAttribute("busList", bDao.getSearchBusToDest(dest));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchBusForCheonAnPage.jsp");
+		System.out.println("셔틀버스 시간표 조회(학교->천안역)");
+		dispatcher.forward(request, response);
+	}
+	
+	// 셔틀버스 시간표 조회(학교->터미널)
+	public void searchBusForTerminal(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dest = "터미널";
+		request.setAttribute("busList", bDao.getSearchBusToDest(dest));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchBusForTerminalPage.jsp");
+		System.out.println("셔틀버스 시간표 조회(학교->터미널)");
 		dispatcher.forward(request, response);
 	}
 }
