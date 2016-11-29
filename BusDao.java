@@ -43,7 +43,7 @@ public class BusDao {
 	// 버스시간표 수정
 	public int updateBus(Bus b) {
 		con = DBUtil.getConnection();
-		String sql = "update `shuttle`.`bus` set `dep`=?,`dest`=?, `hour`=?, `min`=? where `shuttle`.`id`=? limit 1";
+		String sql = "update `shuttle`.`Bus` set `dep`=?,`dest`=?,`hour`=?,`min`=? where `Bus`.`id`=? limit 1";
 		pst = null;
 		try {
 			pst = con.prepareStatement(sql);
