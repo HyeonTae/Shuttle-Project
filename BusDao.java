@@ -134,23 +134,28 @@ public class BusDao {
 	}
 
 	// 버스시간표 조회 (목적지->학교)
-	public ArrayList<Bus> getSearchBusToDep(Bus b) {
+	public ArrayList<Bus> getSearchBusToSMU(String dep, String dest) {
 		busList = new ArrayList<>();
 		con = DBUtil.getConnection();
-		String sql = "select * from bus where dest=? dep=? limit 5";
+		String sql = "select dep, dest, hour, min from bus where dep=? and dest=? order by hour, min";
 		pst = null;
+		rs = null;
 		try {
 			pst = con.prepareStatement(sql);
-			pst.setString(1, b.getDest());
-			pst.setString(2, b.getDep());
+			pst.setString(1, dep);
+			pst.setString(2, dest);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				busList.add(new Bus(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5)));
+				busList.add(new Bus(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
 			}
 			return busList;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBUtil.close(con);
+			DBUtil.close(pst);
+			DBUtil.close(rs);
 		}
 		return null;
 	}
