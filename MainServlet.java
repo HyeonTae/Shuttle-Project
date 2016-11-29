@@ -40,7 +40,7 @@ public class MainServlet extends HttpServlet {
 			loginAdmin(req, res);
 		} else if (action.equals("searchAllClass")) { // 전체학생조회
 			searchAllClass(req, res);
-		} else if (action.equals("regClass")) { //학생추가페이지
+		} else if (action.equals("regClass")) { // 학생추가페이지
 			res.sendRedirect("RegClassPage.jsp");
 		} else if (action.equals("regClassToAdmin")) { // 학생추가
 			regClassToAdmin(req, res);
@@ -52,8 +52,10 @@ public class MainServlet extends HttpServlet {
 			updateClass(req, res);
 		} else if (action.equals("deleteClass")) { // 학생정보삭제
 			deleteClass(req, res);
-		} else if (action.equals("searchAllBus")) { //전체 셔틀버스 시간표 조회
+		} else if (action.equals("searchAllBus")) { // 전체 셔틀버스 시간표 조회
 			searchAllBus(req, res);
+		} else if (action.equals("searchBusForSMU")) { // 셔틀버스 시간표 조회(학교)
+			searchBusForSMU(req, res);
 		}
 	}
 
@@ -135,13 +137,23 @@ public class MainServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/AdminMain.jsp");
 		dispatcher.forward(request, response);
 	}
-	
-	//전체 셔틀버스 시간표 조회
-		public void searchAllBus(HttpServletRequest request, HttpServletResponse response)
-				throws ServletException, IOException {
-			request.setAttribute("busList", bDao.getAllBus());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchAllBusPage.jsp");
-			System.out.println("셔틀 전체시간표 조회");
-			dispatcher.forward(request, response);
-		}
+
+	// 전체 셔틀버스 시간표 조회
+	public void searchAllBus(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setAttribute("busList", bDao.getAllBus());
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchAllBusPage.jsp");
+		System.out.println("셔틀 전체시간표 조회");
+		dispatcher.forward(request, response);
+	}
+
+	// 셔틀버스 시간표 조회(학교)
+	public void searchBusForSMU(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = "A01";
+		request.setAttribute("busList", bDao.getSearchBusForSMU(id));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchBusForSMUPage.jsp");
+		System.out.println("셔틀버스 시간표 조회(학교)");
+		dispatcher.forward(request, response);
+	}
 }
