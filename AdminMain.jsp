@@ -123,6 +123,10 @@ nav .fa.fa-angle-down {margin - left : 6px;}
     </div>
   </nav>
 
+  <br><br><br><br>
+
+  <center> <img src="smu.jpg"><center>
+
 
   <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script>
