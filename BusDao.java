@@ -43,7 +43,7 @@ public class BusDao {
 	// 버스시간표 수정
 	public int updateBus(Bus b) {
 		con = DBUtil.getConnection();
-		String sql = "update `shuttle`.`bus` set `dep`=?,`dest`=?, `hour`=?, `min`=? where `shuttle`.`id`=? limit 1";
+		String sql = "update `shuttle`.`Bus` set `dep`=?,`dest`=?,`hour`=?,`min`=? where `Bus`.`id`=? limit 1";
 		pst = null;
 		try {
 			pst = con.prepareStatement(sql);
@@ -67,7 +67,7 @@ public class BusDao {
 	public ArrayList<Bus> getAllBus() {
 		busList = new ArrayList<>();
 		con = DBUtil.getConnection();
-		String sql = "select * from bus";
+		String sql = "select * from bus order by id";
 		pst = null;
 		try {
 			pst = con.prepareStatement(sql);
@@ -81,5 +81,101 @@ public class BusDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	// 버스시간표 조회 (id)
+	public Bus getSearchBusForId(String id) {
+		con = DBUtil.getConnection();
+		String sql = "select * from bus where id=?";
+		pst = null;
+		rs = null;
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, id);
+			rs = pst.executeQuery();
+			rs.next();
+			
+			return new Bus(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(con);
+			DBUtil.close(pst);
+			DBUtil.close(rs);
+		}
+		return null;
+	}
+
+	// 버스시간표 조회 (학교->목적지)
+	public ArrayList<Bus> getSearchBusToDest(String dest) {
+		busList = new ArrayList<>();
+		con = DBUtil.getConnection();
+		String sql = "select dep, dest, hour, min from bus where dest=? order by hour, min";
+		pst = null;
+		rs = null;
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, dest);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				busList.add(new Bus(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5)));
+			}
+			return busList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(con);
+			DBUtil.close(pst);
+			DBUtil.close(rs);
+		}
+		return null;
+	}
+
+	// 버스시간표 조회 (목적지->학교)
+	public ArrayList<Bus> getSearchBusToSMU(String dep, String dest) {
+		busList = new ArrayList<>();
+		con = DBUtil.getConnection();
+		String sql = "select dep, dest, hour, min from bus where dep=? and dest=? order by hour, min";
+		pst = null;
+		rs = null;
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, dep);
+			pst.setString(2, dest);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				busList.add(new Bus(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
+			}
+			return busList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(con);
+			DBUtil.close(pst);
+			DBUtil.close(rs);
+		}
+		return null;
+	}
+
+	// 버스정보삭제
+	public int deleteClass(String id) {
+		con = DBUtil.getConnection();
+		String sql = "delete from bus where id=?";
+		pst = null;
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, id);
+
+			return pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(con);
+			DBUtil.close(pst);
+		}
+		return 0;
 	}
 }
