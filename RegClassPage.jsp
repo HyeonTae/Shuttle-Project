@@ -439,7 +439,7 @@ $('nav li').hover(
     <center>  <h2> 학생추가 </h2><center>
     </div>
     <div class="form-content">
-      <form action="main.do?action=loginAdmin" method="post" id="myForm">
+      <form action="main.do?action=regClassToAdmin" method="post" id="myForm">
         <div class="form-group">
           <label for="username">Username</label>
           <input type="text" id="id" name="id" required="required"/>
@@ -464,13 +464,6 @@ $('nav li').hover(
           <button  name = "login">추가하기</button>
         </div>
       </form>
-
-     	<%
-             String msg = (String) request.getAttribute("msg");
-             if (msg == null) {
-                 msg = "";
-             }
-          %>
 
     </div>
   </div>
