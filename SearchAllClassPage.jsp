@@ -1,5 +1,8 @@
-
-<!DOCTYPE html>
+<%@page import="smu.shuttle.model.Class"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -210,26 +213,32 @@
 
    	<!--테이블 시작-->
 
+   <%
+		ArrayList<Class> classList = (ArrayList)request.getAttribute("classList");
+	%>
    <div id="container">
    	<center><h1>View all student </h1></center>
 
    	<div id="content">
    	<center>	<h2>Student information</h2></center>
    		<table cellspacing="0" cellpadding="0">
-   			<tr>
-   				<th>ID</th>
-   				<th>PassWord</th>
-   				<th>Name</th>
-   				<th>Major</th>
-           <th>Area</th>
-   			</tr>
-   			<tr>
-   				<td>#</td>
-   				<td>#</td>
-   				<td>#</td>
-   				<td>#</td>
-   				<td>#</td>
-   			</tr>
+		<tr>
+			<th align="center">아이디</th>
+			<th align="center">비밀번호</th>
+			<th align="center">이름</th>
+			<th align="center">학과</th>
+			<th align="center">지역</th>
+		</tr>
+		<%
+			for(Class c:classList){%>
+				<tr>
+					<td><%= c.getId() %></td>
+					<td><%= c.getPass() %></td>
+					<td><%= c.getName() %></td>
+					<td><%= c.getDept() %></td>
+					<td><%= c.getArea() %></td>
+				</tr>		
+			<%}%>	
    		</table>
    	</div>
    </div>
@@ -238,18 +247,3 @@
 
    </body>
    </html>
-
-      <tr>
-         <th colspan="5" align="center" id="p"><h2>모든 학생 조회</h2></th>
-      </tr>
-      <tr>
-         <th align="center">아이디</th>
-         <th align="center">비밀번호</th>
-         <th align="center">이름</th>
-         <th align="center">학과</th>
-         <th align="center">지역</th>
-      </tr>
-   </table>
-
-</body>
-</html>
