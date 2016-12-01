@@ -88,7 +88,7 @@
    table, td{
    	font:100% Arial, Helvetica, sans-serif;
    }
-   table{width:100%;border-collapse:collapse;margin:1em 0;}
+   table{width:70%;border-collapse:collapse;margin:auto;}
    th, td{text-align:left;padding:.5em;border:1px solid #fff;}
    th{background:#328aa4 url(tr_back.gif) repeat-x;color:#fff;}
    td{background:#e5f1f4;}
