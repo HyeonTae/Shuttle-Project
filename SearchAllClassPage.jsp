@@ -217,10 +217,10 @@
 		ArrayList<Class> classList = (ArrayList)request.getAttribute("classList");
 	%>
    <div id="container">
-   	<center><h1>View all student </h1></center>
+   	<center><h1>모든학생조회</h1></center>
 
    	<div id="content">
-   	<center>	<h2>Student information</h2></center>
+   	<center>	<h2>학생정보</h2></center>
    		<table cellspacing="0" cellpadding="0">
 		<tr>
 			<th align="center">아이디</th>
@@ -237,8 +237,8 @@
 					<td><%= c.getName() %></td>
 					<td><%= c.getDept() %></td>
 					<td><%= c.getArea() %></td>
-				</tr>		
-			<%}%>	
+				</tr>
+			<%}%>
    		</table>
    	</div>
    </div>

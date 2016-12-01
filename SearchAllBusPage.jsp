@@ -220,10 +220,10 @@
 
 
    <div id="container">
-   	<center><h1>View all student </h1></center>
+   	<center><h1> 모든 버스 조회 </h1></center>
 
    	<div id="content">
-   	<center>	<h2>Student information</h2></center>
+   	<center>	<h2>버스 정보</h2></center>
    		<table cellspacing="0" cellpadding="0">
 		<tr>
     <th align="center">버스번호</th>
