@@ -1,4 +1,4 @@
-<%@page import="smu.shuttle.model.Class"%>
+<%@page import="smu.shuttle.model.Bus"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -165,9 +165,6 @@
 
    <!--메뉴시작-->
 
-   <%
-     ArrayList<Bus> busList = (ArrayList)request.getAttribute("busList");
-   %>
 
    <nav>
      <div class="container">
@@ -216,9 +213,12 @@
 
    	<!--테이블 시작-->
 
-   <%
-		ArrayList<Class> classList = (ArrayList)request.getAttribute("busList");
-	%>
+    <%
+      ArrayList<Bus> busList = (ArrayList)request.getAttribute("busList");
+    %>
+
+
+
    <div id="container">
    	<center><h1>View all student </h1></center>
 
@@ -233,7 +233,7 @@
     <th align="center">분</th>
 		</tr>
 		<%
-			for(Class c:classList){%>
+			for(Bus b:busList){%>
 				<tr>
         <td><%= b.getId() %></td>
         <td><%= b.getDep() %></a></td>
