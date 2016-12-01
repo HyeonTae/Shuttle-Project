@@ -441,23 +441,23 @@ $('nav li').hover(
     <div class="form-content">
       <form action="main.do?action=regClassToAdmin" method="post" id="myForm">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">학번</label>
           <input type="text" id="id" name="id" required="required"/>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">비밀번호</label>
           <input type="password" id="pass" name="pass" required="required"/>
         </div>
         <div class="form-group">
-          <label for="password">Name</label>
+          <label for="password">이름</label>
           <input type name="name" required="required"/>
         </div>
         <div class="form-group">
-          <label for="password">Major</label>
+          <label for="password">전공</label>
           <input   name="dept" required="required"/>
         </div>
         <div class="form-group">
-          <label for="password">Area</label>
+          <label for="password">지역</label>
           <input    name="area" required="required"/>
         </div>
         <div class="form-group">
