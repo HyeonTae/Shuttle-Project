@@ -292,7 +292,7 @@ form {
 
 		<div id="content">
 			<center>
-				<h2>학교 -> 아산</h2>
+				<h2>학교 -> 아산역</h2>
 			</center>
 			<table cellspacing="0" cellpadding="0">
 				<tr>
