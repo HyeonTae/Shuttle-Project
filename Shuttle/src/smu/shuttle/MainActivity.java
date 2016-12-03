@@ -1,23 +1,20 @@
 package smu.shuttle;
 
 import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.ActionBar.TabListener;
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import smu.custom.CustomAdapter;
+import smu.custom.TabListener;
 
 public class MainActivity extends Activity {
 	ViewPager pager; 
-	ActionBar actionBar; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		actionBar = getActionBar();
+		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
 		//페이저 (밀어서 화면 전환)
@@ -39,34 +36,28 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 			}
 		});
-		Tab tab = null;
-		tab = actionBar.newTab();
-		tab.setText("가장 가까운 시간표"); 
-		tab.setTabListener(listener);
-		actionBar.addTab(tab);
-		tab = actionBar.newTab(); 
-		tab.setText("천안/아산역"); 
-		tab.setTabListener(listener);
-		actionBar.addTab(tab);
-		tab = actionBar.newTab(); 
-		tab.setText("터미널"); 
-		tab.setTabListener(listener);
-		actionBar.addTab(tab);
+//		Tab tab = null;
+//		tab = actionBar.newTab();
+//		tab.setText("가장 가까운 시간표");
+//		tab.setTabListener(listener);
+//		actionBar.addTab(tab);
+//		tab = actionBar.newTab();
+//		tab.setText("천안/아산역");
+//		tab.setTabListener(listener);
+//		actionBar.addTab(tab);
+//		tab = actionBar.newTab();
+//		tab.setText("터미널"); 
+//		tab.setTabListener(listener);
+//		actionBar.addTab(tab);
+		actionBar.addTab(actionBar.newTab().setText("가장가까운시간표").setTabListener(new TabListener<NearTimeActivity>(this, "rr",NearTimeActivity.class)));
+		actionBar.addTab(actionBar.newTab().setText("천안아산역").setTabListener(new TabListener<StationActivity>(this, "rrr",StationActivity.class)));
+		actionBar.addTab(actionBar.newTab().setText("터미널").setTabListener(new TabListener<TerminalActivity>(this, "r",TerminalActivity.class)));
+	
+		
 	}
-	TabListener listener = new TabListener() {
-		@Override
-		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+	@Override
+		protected void onSaveInstanceState(Bundle outState) {
 			// TODO Auto-generated method stub
+			super.onSaveInstanceState(outState);
 		}
-		@Override
-		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			// TODO Auto-generated method stub
-			int position = tab.getPosition();
-			pager.setCurrentItem(position, true);
-		}
-		@Override
-		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-			// TODO Auto-generated method stub
-		}
-	};
 }
