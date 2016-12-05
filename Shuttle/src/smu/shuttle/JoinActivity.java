@@ -71,7 +71,7 @@ public class JoinActivity extends Activity {
 			System.out.println("회원가입 어씽크테스크에 진입 했따.");
 			String str;
 			String sendMsg, receiveMsg = null;
-//			String response = null;
+			String response = null;
 			try {
 				URL url = new URL("보낼 jsp경로");
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -113,7 +113,13 @@ public class JoinActivity extends Activity {
 				e.printStackTrace();
 			}
 			
-			return receiveMsg;
+			return response;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
 		}
 		
 	}
