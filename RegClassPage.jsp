@@ -355,10 +355,6 @@ body {
    window.onload = init;
 </script>
 
-
-
-
-
 </head>
 <body>
 <!--메뉴시자아악-->
@@ -407,30 +403,11 @@ $('nav li').hover(
 <!-- 둥 -->
 
 
-<!--
-
-   <h1>학생 추가</h1>
-   <center>
-<form action="main.do?action=regClassToAdmin" method="post">
-   ID : <input type="text" name="id"/><br>
-   PW : <input type="password" name="pass"/><br>
-   이름 : <input type="text" name="name"/><br>
-   학과 : <input type="text" name="dept"/><br>
-   지역 : <input type="text" name="area"/><br>
-   <br>
-   <input type="submit" value="가입하기">&nbsp;
-   <input type="reset" value="지우기"><br>
-   <a href="AdminMain.jsp">메뉴 화면으로</a>
-</form>
-<center>
--->
-
-
 <br><br>
 
 
 <!-- 폼 시작 -->
-
+<br><br><br><br><br><br>
 <div class="form">
   <div class="form-toggle"></div>
   <div class="form-panel one">

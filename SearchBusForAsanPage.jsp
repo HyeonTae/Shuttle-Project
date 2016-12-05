@@ -220,10 +220,10 @@
 
 
    <div id="container">
-   	<center><h1> 모든 버스 조회 </h1></center>
+   	<center><h1>셔틀버스 조회</h1></center>
 
    	<div id="content">
-   	<center>	<h2>버스 정보</h2></center>
+   	<center>	<h2>학교 -> 터미널</h2></center>
    		<table cellspacing="0" cellpadding="0">
 		<tr>
     <th align="center">출발지</th>
@@ -234,7 +234,7 @@
 		<%
 			for(Bus b:busList){%>
 				<tr>
-        <td><%= b.getDep() %></a></td>
+        <td><%= b.getDep() %></td>
         <td><%= b.getDest() %></td>
         <td><%= b.getHour() %></td>
         <td><%= b.getMin() %></td>
