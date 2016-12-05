@@ -423,7 +423,7 @@ $('nav li').hover(
            if(b!=null){%>
         <div class="form-group">
           <label for="username">ID</label>
-          <input type="text" id="id" name="id" required="required" value="<%=b.getId() %>" readonly="readonly"/>
+          <input type="text" id="id" name="id"  value="<%=b.getId() %>" readonly="readonly"/>
         </div>
         <div class="form-group">
           <label for="password">출발지</label>
@@ -455,7 +455,7 @@ $('nav li').hover(
    <form action="main.do?action=deleteBus" method="post">
         <div class="form-group">
           <label for="username">삭제할 ID</label>
-          <input type="text" id="id" name="id" required="required" value="<%=b.getId() %>" readonly="readonly"/>
+          <input type="text" id="id" name="id" value="<%=b.getId() %>" readonly="readonly"/>
         </div>
 
         <div class="form-group">
