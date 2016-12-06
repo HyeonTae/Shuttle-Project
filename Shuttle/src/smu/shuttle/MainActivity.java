@@ -2,8 +2,11 @@ package smu.shuttle;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.TabActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.widget.TabHost;
 import smu.custom.TabListener;
 
 public class MainActivity extends Activity {
@@ -11,7 +14,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main);
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
@@ -51,7 +54,13 @@ public class MainActivity extends Activity {
 		actionBar.addTab(actionBar.newTab().setText("천안아산역").setTabListener(new TabListener<StationActivity>(this, "rrr",StationActivity.class)));
 		actionBar.addTab(actionBar.newTab().setText("터미널").setTabListener(new TabListener<TerminalActivity>(this, "r",TerminalActivity.class)));
 	
-		
+//		TabHost mTab = getTabHost();
+//		TabHost.TabSpec spec;
+//		Intent i;
+//		
+//		i = new Intent(this,NearTimeActivity);
+//		spec = mTab.newTabSpec("가장 가까운 시간표")
+//		
 	}
 	@Override
 		protected void onSaveInstanceState(Bundle outState) {

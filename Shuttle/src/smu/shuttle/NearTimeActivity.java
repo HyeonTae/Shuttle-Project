@@ -3,6 +3,7 @@ package smu.shuttle;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 
 public class NearTimeActivity extends Fragment {
 
-	
+	TextView tv;
 	//현재 시간을 msec로 구한다.
 	long now = System.currentTimeMillis();
 	//현재시간을 nowTime에 저장
@@ -28,6 +29,8 @@ public class NearTimeActivity extends Fragment {
 		View v = inflater.inflate(R.layout.activity_near_time, container,false);
 		View tv=v.findViewById(R.id.textView1);
 		((TextView)tv).setText("sdfkj");
+		
 		return v;
 	}
+
 }
