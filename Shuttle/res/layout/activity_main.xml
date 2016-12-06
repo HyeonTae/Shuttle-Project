@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="천안아산역" />
+        android:text="전체시간표" />
 
     <Button
         android:id="@+id/TerminalBtn"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="천안터미널시간표" />
+        android:text="수정버튼" />
 
     <Button
         android:id="@+id/button1"
@@ -27,7 +27,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/TerminalBtn"
         android:layout_marginRight="26dp"
-        android:text="천안역" />
+        android:text="수정버튼2" />
 
     <TextView
         android:id="@+id/cityName"

@@ -83,7 +83,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.StattionBtn:
-			Intent i = new Intent(this,StationActivity.class);
+			Intent i = new Intent(this,AllBusActivity.class);
 			startActivity(i);
 //			finish();
 			break;

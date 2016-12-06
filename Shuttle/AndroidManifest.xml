@@ -48,7 +48,7 @@
             android:label="@string/title_activity_near_time" >
         </activity>
         <activity
-            android:name=".StationActivity"
+            android:name=".AllBusActivity"
             android:label="@string/title_activity_station" >
         </activity>
         <activity

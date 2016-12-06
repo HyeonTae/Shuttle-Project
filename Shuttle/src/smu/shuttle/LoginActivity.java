@@ -95,12 +95,13 @@ public class LoginActivity extends Activity {
 				conn.setRequestMethod("POST");//데이터를 POST 방식으로 전송
 				conn.setDoInput(true);
 				conn.setDoOutput(true);
+				
 				//보낼 정보 ( 아이디 와 패스워드)
 				sendMsg = "action=LoginUserId="+userId.getText().toString()+"&pw="+userPass.getText().toString();
-				
 				OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 				osw.write(sendMsg);
 				osw.flush();
+				osw.close();
 				
 				//jsp와 통신이 정상적으로 되었을 때 
 				if(conn.getResponseCode() == conn.HTTP_OK){

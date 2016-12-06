@@ -27,7 +27,7 @@ public class CustomAdapter extends PagerAdapter {
 			view = inflater.inflate(R.layout.activity_near_time, null);
 			break;
 		case 1: 
-			view = inflater.inflate(R.layout.activity_station, null);
+			view = inflater.inflate(R.layout.activity_allbus, null);
 			break;
 		case 2:
 			view = inflater.inflate(R.layout.activity_terminal, null);
