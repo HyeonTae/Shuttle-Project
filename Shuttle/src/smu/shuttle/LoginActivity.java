@@ -26,21 +26,40 @@ public class LoginActivity extends Activity {
 
 	private Button loginBut;
 	private Button joinBut;
+	private static final String NO_DATA = "NO_DATA";
 	private EditText userId;
 	private EditText userPass;
 	SharedPreferences sp;
 	SharedPreferences.Editor ed;
+	private CheckBox autolg;
+	ObjectMapper mapper = new ObjectMapper();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		String atLogId;
+		String atLogPass;
+
+		sp = getSharedPreferences("sp", MODE_PRIVATE);
+		ed = sp.edit();
 		
 		loginBut = (Button) findViewById(R.id.loginBut);
 		joinBut = (Button) findViewById(R.id.joinBut);
 		
 		userId = (EditText) findViewById(R.id.id_input);
 		userPass = (EditText) findViewById(R.id.pass_input);
+		autolg = (CheckBox) findViewById(R.id.AutoLogin);
 		
+		atLogId = sp.getString("autoid", NO_DATA);
+		atLogPass = sp.getString("autopass", NO_DATA);
+		
+		if (!atLogId.equals(NO_DATA) && !atLogPass.equals(NO_DATA)) {
+
+			Intent i = new Intent(LoginActivity.this, MainActivity.class);
+			startActivity(i);
+			finish();
+		}
 	}
 
 	//로그인버튼 클릭시
@@ -59,9 +78,9 @@ public class LoginActivity extends Activity {
 			new LoginAsincTask().execute();
 			Toast.makeText(getApplicationContext(), "로그인버튼을 눌렀습니다", Toast.LENGTH_SHORT).show();
 			//바로 메인액티비티로 넘어간다
-			Intent i = new Intent(LoginActivity.this,MainActivity.class);
-			startActivity(i);
-			finish();
+//			Intent i = new Intent(LoginActivity.this,MainActivity.class);
+//			startActivity(i);
+//			finish();
 		}else{
 			//아이디와 비밀번호가 빈칸일 시 토스트로 알림을 해준다
 			Toast.makeText(getApplicationContext(), "아아디와 비밀번호를 다시 확인 해주세요", Toast.LENGTH_SHORT).show();
@@ -81,47 +100,37 @@ public class LoginActivity extends Activity {
 	
 	
 	public class LoginAsincTask extends AsyncTask<String, Void, String>{
-
+		Class c;
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			System.out.println("로그인 어씽크테스크에 진입 했따.");
-			String str="";
-			String sendMsg, receiveMsg = null;
 			String response = null;
+			StringBuilder sb = new StringBuilder();
+			HttpURLConnection conn;
+			
 			try {
-				URL url = new URL("보낼 jsp경로");
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestMethod("POST");//데이터를 POST 방식으로 전송
+				String param = "action=loginToClass&id=" + userId.getText().toString() + "&pass="
+						+ userPass.getText().toString();
+				conn = (HttpURLConnection) new URL("http://192.168.0.34:8060/ShuttleServer/main.do").openConnection();
+				conn.setRequestMethod("POST");
 				conn.setDoInput(true);
 				conn.setDoOutput(true);
-				
-				//보낼 정보 ( 아이디 와 패스워드)
-				sendMsg = "action=LoginUserId="+userId.getText().toString()+"&pw="+userPass.getText().toString();
-				OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-				osw.write(sendMsg);
-				osw.flush();
-				osw.close();
-				
-				//jsp와 통신이 정상적으로 되었을 때 
-				if(conn.getResponseCode() == conn.HTTP_OK){
-					InputStreamReader tmp = new InputStreamReader(conn.getInputStream(),"UTF-8");
-					BufferedReader reader = new BufferedReader(tmp);
-					StringBuffer buffer = new StringBuffer();
-					//jsp에서 보낸 값을 받는다
-					while((str =reader.readLine())!=null){
-						buffer.append(str);
-					}
-					receiveMsg = buffer.toString();
-					
-				}else{
-					Log.i("통신결과",conn.getResponseCode()+"에러");
+
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
+
+				bw.write(param);
+				bw.flush();
+				bw.close();
+
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+
+				String str = "";
+				while ((str = br.readLine()) != null) {
+					sb.append(str);
 				}
-				
-				
-//				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(),"UTF-8"));
-				
-				
+				System.out.println(sb.toString());
+				c = mapper.readValue(sb.toString(), Class.class);
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -129,13 +138,39 @@ public class LoginActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 			return response;
 		}
 		
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
+			if (c!=null) {
+				if (autolg.isChecked()) {
+					ed.putString("autoid", userId.getText().toString());
+					ed.putString("autopass", userPass.getText().toString());
+					ed.putString("id", c.getId());
+					ed.putString("pass", c.getPass());
+					ed.putString("name", c.getName());
+					ed.putString("dept", c.getDept());
+					ed.putString("area", c.getArea());
+					ed.commit();
+					Intent i = new Intent(LoginActivity.this, MainActivity.class);
+					startActivity(i);
+					finish();
+
+				}else{
+					ed.putString("id", c.getId());
+					ed.putString("pass", c.getPass());
+					ed.putString("name", c.getName());
+					ed.putString("dept", c.getDept());
+					ed.putString("area", c.getArea());
+					ed.commit();
+					Intent i = new Intent(LoginActivity.this, MainActivity.class);
+					startActivity(i);
+					finish();
+				}
+			}else{
+				Toast.makeText(getApplicationContext(), "계정 확인을 해주세요", Toast.LENGTH_SHORT).show();
+			}
 			super.onPostExecute(result);
 		}
 		
