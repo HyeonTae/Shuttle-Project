@@ -1,13 +1,13 @@
 package smu.model;
 
-public class SuttleBus {
+public class ShuttleBus {
 
 	private String id;
 	private String dep;//출발지
 	private String dest;//도착지
 	private int hour;
 	private int min;
-	public SuttleBus(String id, String dep, String dest, int hour, int min) {
+	public ShuttleBus(String id, String dep, String dest, int hour, int min) {
 		super();
 		this.id = id;
 		this.dep = dep;

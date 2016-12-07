@@ -8,6 +8,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.Buffer;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,35 +22,54 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+import smu.model.Class;
 
 public class LoginActivity extends Activity {
 
 	private Button loginBut;
 	private Button joinBut;
-	private EditText userId;
-	private EditText userPass;
+	private EditText classId;
+	private EditText classPass;
 	SharedPreferences sp;
 	SharedPreferences.Editor ed;
+	private CheckBox autolog;
+	private static final String NO_DATA= "NO_DATA";
+	ObjectMapper mapper = new ObjectMapper();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		String atlogId;
+		String atlogPass;
+		
+		sp = getSharedPreferences("sp", MODE_PRIVATE);
+		ed = sp.edit();
+		
 		loginBut = (Button) findViewById(R.id.loginBut);
 		joinBut = (Button) findViewById(R.id.joinBut);
 		
-		userId = (EditText) findViewById(R.id.id_input);
-		userPass = (EditText) findViewById(R.id.pass_input);
+		classId = (EditText) findViewById(R.id.id_input);
+		classPass = (EditText) findViewById(R.id.pass_input);
 		
+		atlogId = sp.getString("autoid", NO_DATA);
+		atlogPass = sp.getString("autopass", NO_DATA);
+		
+		if(!atlogId.equals(NO_DATA)&&!atlogPass.equals(NO_DATA)){
+			Intent i = new Intent(LoginActivity.this,MainActivity.class);
+			startActivity(i);
+			finish();
+		}
 	}
 
 	//로그인버튼 클릭시
 	public void loginBut(View v){
 		
-		String id = userId.getText().toString().trim();
-		String pass = userPass.getText().toString().trim();
+		String id = classId.getText().toString().trim();
+		String pass = classPass.getText().toString().trim();
 		
 		//테스트
 		System.out.println(id);
@@ -58,10 +80,10 @@ public class LoginActivity extends Activity {
 		if(!id.isEmpty() && !pass.isEmpty()){
 			new LoginAsincTask().execute();
 			Toast.makeText(getApplicationContext(), "로그인버튼을 눌렀습니다", Toast.LENGTH_SHORT).show();
-			//바로 메인액티비티로 넘어간다
-			Intent i = new Intent(LoginActivity.this,MainActivity.class);
-			startActivity(i);
-			finish();
+//			//바로 메인액티비티로 넘어간다
+//			Intent i = new Intent(LoginActivity.this,MainActivity.class);
+//			startActivity(i);
+//			finish();
 		}else{
 			//아이디와 비밀번호가 빈칸일 시 토스트로 알림을 해준다
 			Toast.makeText(getApplicationContext(), "아아디와 비밀번호를 다시 확인 해주세요", Toast.LENGTH_SHORT).show();
@@ -82,6 +104,7 @@ public class LoginActivity extends Activity {
 	
 	public class LoginAsincTask extends AsyncTask<String, Void, String>{
 
+		Class c;
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
@@ -89,38 +112,27 @@ public class LoginActivity extends Activity {
 			String str="";
 			String sendMsg, receiveMsg = null;
 			String response = null;
+			StringBuilder sb = new StringBuilder();
 			try {
-				URL url = new URL("보낼 jsp경로");
+				URL url = new URL("http://192.168.0.6:8060/ShuttleSever/main.do");
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("POST");//데이터를 POST 방식으로 전송
 				conn.setDoInput(true);
 				conn.setDoOutput(true);
 				
 				//보낼 정보 ( 아이디 와 패스워드)
-				sendMsg = "action=LoginUserId="+userId.getText().toString()+"&pw="+userPass.getText().toString();
-				OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-				osw.write(sendMsg);
-				osw.flush();
-				osw.close();
+				sendMsg = "action=LoginToClass&id="+classId.getText().toString()+"&pass="+classPass.getText().toString();
 				
-				//jsp와 통신이 정상적으로 되었을 때 
-				if(conn.getResponseCode() == conn.HTTP_OK){
-					InputStreamReader tmp = new InputStreamReader(conn.getInputStream(),"UTF-8");
-					BufferedReader reader = new BufferedReader(tmp);
-					StringBuffer buffer = new StringBuffer();
-					//jsp에서 보낸 값을 받는다
-					while((str =reader.readLine())!=null){
-						buffer.append(str);
-					}
-					receiveMsg = buffer.toString();
-					
-				}else{
-					Log.i("통신결과",conn.getResponseCode()+"에러");
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(),"UTF-8"));
+				bw.write(sendMsg);
+				bw.flush();
+				bw.close();
+				
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+				while((str=br.readLine()) != null){
+					sb.append(str);
 				}
-				
-				
-//				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(),"UTF-8"));
-				
+				c = mapper.readValue(sb.toString(), Class.class);
 				
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
@@ -136,6 +148,34 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
+			if(c!=null){
+				if(autolog.isChecked()){
+					ed.putString("autoid", classId.getText().toString());
+					ed.putString("autopass", classPass.getText().toString());
+					ed.putString("id", c.getClassId());
+					ed.putString("pass",c.getClassPass() );
+					ed.putString("name", c.getClassName());
+					ed.putString("dept", c.getClassDept());
+					ed.putString("area", c.getClassArea());
+					ed.commit();
+					Intent i = new Intent(LoginActivity.this,MainActivity.class);
+					startActivity(i);
+					finish();
+
+				}else{
+					ed.putString("id", c.getClassId());
+					ed.putString("pass",c.getClassPass() );
+					ed.putString("name", c.getClassName());
+					ed.putString("dept", c.getClassDept());
+					ed.putString("area", c.getClassArea());
+					ed.commit();
+					Intent i = new Intent(LoginActivity.this,MainActivity.class);
+					startActivity(i);
+					finish();
+				}
+			}else{
+				Toast.makeText(getApplicationContext(), "계정을 다시 확인해주세요", Toast.LENGTH_SHORT).show();
+			}
 			super.onPostExecute(result);
 		}
 		
