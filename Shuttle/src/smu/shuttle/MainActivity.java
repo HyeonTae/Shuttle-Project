@@ -34,6 +34,8 @@ public class MainActivity extends Activity implements OnClickListener{
     private static final String TAG = "Debug";
     private boolean isGPSEnabled = false;
     private boolean isNetworkEnabled = false;
+    
+   
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

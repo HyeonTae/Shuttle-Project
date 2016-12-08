@@ -9,7 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.Buffer;
-
+import java.util.HashMap;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import android.app.Activity;
@@ -26,7 +27,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import smu.model.Class;
-
 public class LoginActivity extends Activity {
 
 	private Button loginBut;
@@ -38,6 +38,10 @@ public class LoginActivity extends Activity {
 	private CheckBox autolog;
 	private static final String NO_DATA= "NO_DATA";
 	ObjectMapper mapper = new ObjectMapper();
+	
+	
+	HashMap<String,String> map = new HashMap<String,String>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,7 +58,7 @@ public class LoginActivity extends Activity {
 		
 		classId = (EditText) findViewById(R.id.id_input);
 		classPass = (EditText) findViewById(R.id.pass_input);
-		
+		autolog = (CheckBox) findViewById(R.id.AutoLogin);
 		atlogId = sp.getString("autoid", NO_DATA);
 		atlogPass = sp.getString("autopass", NO_DATA);
 		
@@ -105,35 +109,41 @@ public class LoginActivity extends Activity {
 	public class LoginAsincTask extends AsyncTask<String, Void, String>{
 
 		Class c;
+		String you;
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			System.out.println("로그인 어씽크테스크에 진입 했따.");
 			String str="";
-			String sendMsg, receiveMsg = null;
+			String  receiveMsg = null;
 			String response = null;
 			StringBuilder sb = new StringBuilder();
+			HttpURLConnection conn;
 			try {
-				URL url = new URL("http://192.168.0.6:8060/ShuttleSever/main.do");
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn = (HttpURLConnection) new URL("http://192.168.0.6:8080/ShuttleServer/main.do").openConnection();
 				conn.setRequestMethod("POST");//데이터를 POST 방식으로 전송
 				conn.setDoInput(true);
 				conn.setDoOutput(true);
 				
 				//보낼 정보 ( 아이디 와 패스워드)
-				sendMsg = "action=LoginToClass&id="+classId.getText().toString()+"&pass="+classPass.getText().toString();
+				String param = "action=loginToClass&id="+classId.getText().toString()+"&pass="+classPass.getText().toString();
 				
 				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(),"UTF-8"));
-				bw.write(sendMsg);
+				bw.write(param);
 				bw.flush();
 				bw.close();
 				
 				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
 				while((str=br.readLine()) != null){
 					sb.append(str);
+					System.out.println("str:"+str);
 				}
-				c = mapper.readValue(sb.toString(), Class.class);
-				
+				System.out.println("sb.toString()"+sb.toString());
+				map = mapper.readValue(sb.toString(), 
+		                new TypeReference<HashMap<String, String>>() {});
+				System.out.println(map);
+				System.out.println(map.get("flag"));
+				return map.get("flag");
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -148,31 +158,37 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
-			if(c!=null){
+			System.out.println(result);
+			if(result == "true"){
 				if(autolog.isChecked()){
 					ed.putString("autoid", classId.getText().toString());
 					ed.putString("autopass", classPass.getText().toString());
-					ed.putString("id", c.getClassId());
-					ed.putString("pass",c.getClassPass() );
-					ed.putString("name", c.getClassName());
-					ed.putString("dept", c.getClassDept());
-					ed.putString("area", c.getClassArea());
 					ed.commit();
-					Intent i = new Intent(LoginActivity.this,MainActivity.class);
-					startActivity(i);
-					finish();
-
-				}else{
-					ed.putString("id", c.getClassId());
-					ed.putString("pass",c.getClassPass() );
-					ed.putString("name", c.getClassName());
-					ed.putString("dept", c.getClassDept());
-					ed.putString("area", c.getClassArea());
-					ed.commit();
-					Intent i = new Intent(LoginActivity.this,MainActivity.class);
-					startActivity(i);
-					finish();
 				}
+
+//					ed.putString("id", c.getClassId());
+//					ed.putString("pass",c.getClassPass() );
+//					ed.putString("name", c.getClassName());
+//					ed.putString("dept", c.getClassDept());
+//					ed.putString("area", c.getClassArea());
+//					ed.commit();
+//					Intent i = new Intent(LoginActivity.this,MainActivity.class);
+//					startActivity(i);
+//					finish();
+//
+//				}else{
+					System.out.println("sadsadsadsad");
+//					ed.putString("id", c.getClassId());
+//					ed.putString("pass",c.getClassPass() );
+//					ed.putString("name", c.getClassName());
+//					ed.putString("dept", c.getClassDept());
+//					ed.putString("area", c.getClassArea());
+//					ed.commit();
+					
+					Intent i = new Intent(LoginActivity.this,MainActivity.class);
+					startActivity(i);
+					finish();
+//				}
 			}else{
 				Toast.makeText(getApplicationContext(), "계정을 다시 확인해주세요", Toast.LENGTH_SHORT).show();
 			}

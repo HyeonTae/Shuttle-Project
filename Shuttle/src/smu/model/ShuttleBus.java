@@ -45,6 +45,13 @@ public class ShuttleBus {
 	public void setMin(int min) {
 		this.min = min;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ShuttleBus [id=" + id + ", dep=" + dep + ", dest=" + dest + ", hour=" + hour + ", min=" + min + "]";
+	}
 	
 	
 }
