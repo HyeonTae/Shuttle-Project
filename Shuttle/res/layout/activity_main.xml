@@ -1,49 +1,44 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
     <Button
-        android:id="@+id/StattionBtn"
+        android:id="@+id/goToSmuBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="전체시간표" />
+        android:text="학교갈래?" />
 
     <Button
-        android:id="@+id/TerminalBtn"
+        android:id="@+id/goToHomeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="수정버튼" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/TerminalBtn"
-        android:layout_marginRight="26dp"
-        android:text="수정버튼2" />
+        android:text="집에갈래?" />
 
     <TextView
-        android:id="@+id/cityName"
+        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/progressBar1"
-        android:layout_below="@+id/button1"
-        android:text="Large Text"
+        android:text="가까운시간표출력"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <ProgressBar
-        android:id="@+id/progressBar1"
+     <TextView
+        android:id="@+id/tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TerminalBtn"
-        android:layout_below="@+id/cityName"
-        android:layout_marginTop="37dp" />
-    
-</RelativeLayout>
+        android:text="버튼을눌러주세요"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <ToggleButton
+        android:id="@+id/toggle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="Gps사용"
+        android:textOn="위치수신종료"/>
+    <ListView
+        android:id="@+id/mainListView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+</LinearLayout>
