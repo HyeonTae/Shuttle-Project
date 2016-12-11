@@ -82,7 +82,34 @@ public class BusDao {
 		}
 		return null;
 	}
-	
+
+	// 버스시간표 조회 (학생용)
+	public ArrayList<Bus> getAllBusForClass() {
+		busList = new ArrayList<>();
+		con = DBUtil.getConnection();
+		String sql = "select dep, dest, hour, min from bus order by id";
+		pst = null;
+		rs = null;
+		try {
+			pst = con.prepareStatement(sql);
+			rs = pst.executeQuery();
+
+			while (rs.next()) {
+				busList.add(
+						new Bus(rs.getString(1).toString(), rs.getString(2).toString(), rs.getInt(3), rs.getInt(4)));
+			}
+			return busList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(con);
+			DBUtil.close(pst);
+			DBUtil.close(rs);
+		}
+		return null;
+	}
+
 	// 버스시간표 조회 (id)
 	public Bus getSearchBusForId(String id) {
 		con = DBUtil.getConnection();
@@ -94,7 +121,7 @@ public class BusDao {
 			pst.setString(1, id);
 			rs = pst.executeQuery();
 			rs.next();
-			
+
 			return new Bus(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -144,6 +171,63 @@ public class BusDao {
 			pst = con.prepareStatement(sql);
 			pst.setString(1, dep);
 			pst.setString(2, dest);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				busList.add(new Bus(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
+			}
+			return busList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(con);
+			DBUtil.close(pst);
+			DBUtil.close(rs);
+		}
+		return null;
+	}
+
+	// 빠른 조회 (목적지->학교)
+	public ArrayList<Bus> getFestSearchBusToSMU(String dep, String dest, int hour, int min) {
+		busList = new ArrayList<>();
+		con = DBUtil.getConnection();
+		String sql = "select dep, dest, hour, min from bus where dep=? and dest=? and hour>=? and min>=? order by hour, min limit 5";
+		pst = null;
+		rs = null;
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, dep);
+			pst.setString(2, dest);
+			pst.setInt(3, hour);
+			pst.setInt(4, min);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				busList.add(new Bus(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
+			}
+			return busList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(con);
+			DBUtil.close(pst);
+			DBUtil.close(rs);
+		}
+		return null;
+	}
+
+	// 빠른 조회 (학교->목적지)
+	public ArrayList<Bus> getFestSearchBusToDest(String dep, int hour, int min) {
+		busList = new ArrayList<>();
+		con = DBUtil.getConnection();
+		String sql = "select dep, dest, hour, min from bus where dep=? and hour>=? and min>=? order by hour, min limit 15";
+		pst = null;
+		rs = null;
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, dep);
+			pst.setInt(2, hour);
+			pst.setInt(3, min);
 			rs = pst.executeQuery();
 			while (rs.next()) {
 				busList.add(new Bus(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
