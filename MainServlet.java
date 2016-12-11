@@ -66,18 +66,50 @@ public class MainServlet extends HttpServlet {
 			deleteBus(req, res);
 		} else if (action.equals("searchAllBus")) { // 전체 셔틀버스 시간표 조회
 			searchAllBus(req, res);
-		} else if (action.equals("searchBusFromAsanToSMU")) { // 셔틀버스 시간표 조회(아산역->학교)
+		} else if (action.equals("searchBusFromAsanToSMU")) { // 셔틀버스 시간표
+																// 조회(아산역->학교)
 			searchBusFromAsanToSMU(req, res);
-		} else if (action.equals("searchBusFromCheonAnToSMU")) { // 셔틀버스 시간표조회(천안역->학교)
+		} else if (action.equals("searchBusFromCheonAnToSMU")) { // 셔틀버스
+																	// 시간표조회(천안역->학교)
 			searchBusFromCheonAnToSMU(req, res);
-		} else if (action.equals("searchBusFromTerminalToSMU")) { // 셔틀버스 시간표조회(터미널->학교)
+		} else if (action.equals("searchBusFromTerminalToSMU")) { // 셔틀버스
+																	// 시간표조회(터미널->학교)
 			searchBusFromTerminalToSMU(req, res);
 		} else if (action.equals("searchBusForAsan")) { // 셔틀버스 시간표조회(학교->아산역)
 			searchBusForAsan(req, res);
-		} else if (action.equals("searchBusForCheonAn")) { // 셔틀버스 시간표조회(학교->천안역)
+		} else if (action.equals("searchBusForCheonAn")) { // 셔틀버스
+															// 시간표조회(학교->천안역)
 			searchBusForCheonAn(req, res);
-		} else if (action.equals("searchBusForTerminal")) { // 셔틀버스 시간표조회(학교->터미널)
+		} else if (action.equals("searchBusForTerminal")) { // 셔틀버스
+															// 시간표조회(학교->터미널)
 			searchBusForTerminal(req, res);
+		}
+		// 학생용
+		else if (action.equals("searchAllBusForClass")) { // 전체 셔틀버스 시간표 조회
+															// (학생용)
+			searchAllBusForClass(req, res);
+		} else if (action.equals("classSearchBusFromAsanToSMU")) { // 셔틀버스 시간표
+																	// 조회(아산역->학교)
+			classSearchBusFromAsanToSMU(req, res);
+		} else if (action.equals("classSearchBusFromCheonAnToSMU")) { // 셔틀버스
+																		// 시간표조회(천안역->학교)
+			classSearchBusFromCheonAnToSMU(req, res);
+		} else if (action.equals("classSearchBusFromTerminalToSMU")) { // 셔틀버스
+																		// 시간표조회(터미널->학교)
+			classSearchBusFromTerminalToSMU(req, res);
+		} else if (action.equals("classSearchBusForAsan")) { // 셔틀버스
+																// 시간표조회(학교->아산역)
+			classSearchBusForAsan(req, res);
+		} else if (action.equals("classSearchBusForCheonAn")) { // 셔틀버스
+																// 시간표조회(학교->천안역)
+			classSearchBusForCheonAn(req, res);
+		} else if (action.equals("classSearchBusForTerminal")) { // 셔틀버스
+																	// 시간표조회(학교->터미널)
+			classSearchBusForTerminal(req, res);
+		} else if (action.equals("festSearchBusToSMU")) { // 빠른 시간표 조회 (학교로)
+			festSearchBusToSMU(req, res);
+		} else if (action.equals("festSearchBusToDest")) { // 빠른 시간표 조회 (집으로)
+			festSearchBusToDest(req, res);
 		}
 	}
 
@@ -168,7 +200,7 @@ public class MainServlet extends HttpServlet {
 		System.out.println("셔틀버스 추가완료");
 		response.sendRedirect("AdminMain.jsp");
 	}
-	
+
 	// 셔틀버스 ID로 검색
 	public void searchBusForID(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -245,7 +277,7 @@ public class MainServlet extends HttpServlet {
 		System.out.println("셔틀버스 시간표 조회(터미널->학교)");
 		dispatcher.forward(request, response);
 	}
-	
+
 	// 셔틀버스 시간표 조회(학교->아산역)
 	public void searchBusForAsan(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -255,7 +287,7 @@ public class MainServlet extends HttpServlet {
 		System.out.println("셔틀버스 시간표 조회(학교->아산역)");
 		dispatcher.forward(request, response);
 	}
-	
+
 	// 셔틀버스 시간표 조회(학교->천안역)
 	public void searchBusForCheonAn(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -265,7 +297,7 @@ public class MainServlet extends HttpServlet {
 		System.out.println("셔틀버스 시간표 조회(학교->천안역)");
 		dispatcher.forward(request, response);
 	}
-	
+
 	// 셔틀버스 시간표 조회(학교->터미널)
 	public void searchBusForTerminal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
