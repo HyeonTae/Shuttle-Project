@@ -415,6 +415,13 @@ $('nav li').hover(
     <div class="form-header">
 
     <center>  <h2> 정보수정 </h2><center>
+    <form action="main.do?action=searchBusForID" method="post">
+							<div class="form-group">
+								<label for="username">셔틀버스 ID</label> <input type="text"
+									name="id" />&nbsp;&nbsp;
+								<button name="submit">검색</button>
+							</div>
+						</form>
     </div>
     <div class="form-content">
         <form action="main.do?action=searchBusForID" method="post">
@@ -446,6 +453,7 @@ $('nav li').hover(
           <button  name = "login">정보 수정</button>
         </div>
       </form>
+      <%=} %>
     </div>
 
 
