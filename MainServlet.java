@@ -245,6 +245,16 @@ public class MainServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	// 전체 셔틀버스 시간표 조회 (학생조회용)
+	public void searchAllBusForClass(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		ArrayList<Bus> arr = bDao.getAllBusForClass();
+		String result = mapper.writeValueAsString(arr);
+		System.out.println("셔틀버스조회 (학생용)");
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/result.jsp").forward(request, response);
+	}
+
 	// 셔틀버스 시간표 조회(아산역->학교)
 	public void searchBusFromAsanToSMU(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -306,5 +316,102 @@ public class MainServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchBusForTerminalPage.jsp");
 		System.out.println("셔틀버스 시간표 조회(학교->터미널)");
 		dispatcher.forward(request, response);
+	}
+
+	// 학생용
+	// 셔틀버스 시간표 조회(아산역->학교)
+	public void classSearchBusFromAsanToSMU(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dep = "아산역";
+		String dest = "학교";
+		ArrayList<Bus> arr = bDao.getSearchBusToSMU(dep, dest);
+		String result = mapper.writeValueAsString(arr);
+		System.out.println("셔틀버스조회 (천안역->학교)(학생용)");
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/result.jsp").forward(request, response);
+	}
+
+	// 셔틀버스 시간표 조회(천안역->학교)
+	public void classSearchBusFromCheonAnToSMU(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dep = "천안역";
+		String dest = "학교";
+		ArrayList<Bus> arr = bDao.getSearchBusToSMU(dep, dest);
+		String result = mapper.writeValueAsString(arr);
+		System.out.println("셔틀버스조회 (천안역->학교)(학생용)");
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/result.jsp").forward(request, response);
+	}
+
+	// 셔틀버스 시간표 조회(터미널->학교)
+	public void classSearchBusFromTerminalToSMU(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dep = "터미널";
+		String dest = "학교";
+		ArrayList<Bus> arr = bDao.getSearchBusToSMU(dep, dest);
+		String result = mapper.writeValueAsString(arr);
+		System.out.println("셔틀버스조회 (터미널->학교)(학생용)");
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/result.jsp").forward(request, response);
+	}
+
+	// 셔틀버스 시간표 조회(학교->아산역)
+	public void classSearchBusForAsan(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dest = "천안/아산역";
+		ArrayList<Bus> arr = bDao.getSearchBusToDest(dest);
+		String result = mapper.writeValueAsString(arr);
+		System.out.println("셔틀버스조회 (학교->아산역)(학생용)");
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/result.jsp").forward(request, response);
+	}
+
+	// 셔틀버스 시간표 조회(학교->천안역)
+	public void classSearchBusForCheonAn(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dest = "천안/아산역";
+		ArrayList<Bus> arr = bDao.getSearchBusToDest(dest);
+		String result = mapper.writeValueAsString(arr);
+		System.out.println("셔틀버스조회 (학교->천안역)(학생용)");
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/result.jsp").forward(request, response);
+	}
+
+	// 셔틀버스 시간표 조회(학교->터미널)
+	public void classSearchBusForTerminal(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dest = "천안터미널";
+		ArrayList<Bus> arr = bDao.getSearchBusToDest(dest);
+		String result = mapper.writeValueAsString(arr);
+		System.out.println("셔틀버스조회 (학교->터미널)(학생용)");
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/result.jsp").forward(request, response);
+	}
+
+	// 빠른 시간표 조회 (학교로)
+	public void festSearchBusToSMU(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dep = request.getParameter("dep");
+		String dest = "학교";
+		int hour = Integer.parseInt(request.getParameter("hour"));
+		int min = Integer.parseInt(request.getParameter("min"));
+		ArrayList<Bus> arr = bDao.getFestSearchBusToSMU(dep, dest, hour, min);
+		String result = mapper.writeValueAsString(arr);
+		System.out.println("빠른 시간표 조회 (학교로)");
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/result.jsp").forward(request, response);
+	}
+
+	// 빠른 시간표 조회 (집으로)
+	public void festSearchBusToDest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String dep = "학교";
+		int hour = Integer.parseInt(request.getParameter("hour"));
+		int min = Integer.parseInt(request.getParameter("min"));
+		ArrayList<Bus> arr = bDao.getFestSearchBusToDest(dep, hour, min);
+		String result = mapper.writeValueAsString(arr);
+		System.out.println("빠른 시간표 조회 (학교로)");
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/result.jsp").forward(request, response);
 	}
 }
